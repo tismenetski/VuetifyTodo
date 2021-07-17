@@ -1,0 +1,43 @@
+<template>
+  <v-text-field
+      :value="$store.state.search"
+      @input="$store.commit('setSearch',$event)"
+      dense
+      placeholder="Search"
+      filled
+      clearable
+      prepend-inner-icon="mdi-magnify"
+      :disabled="$store.state.sorting"
+      class="mt-1 expanding-search"
+      :class="{'closed' : searchClosed && !$store.state.search}"
+      @focus="searchClosed = false"
+      @blur="searchClosed = true"
+  ></v-text-field>
+</template>
+
+<script>
+export default {
+  name: "Search",
+  data() {
+    return {
+      searchClosed : true,
+
+    }
+  }
+}
+</script>
+
+<style lang="sass">
+.expanding-search
+  transition: max-width 0.3s
+
+  .v-input__slot
+    &:before,&:after
+      border-color: transparent !important
+
+  &.closed
+    max-width: 45px
+    .v-input__slot
+      background: transparent !important
+      cursor: pointer !important
+</style>
